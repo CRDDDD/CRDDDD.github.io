@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WoundFish</title>
+    <link rel="icon" href="../木鱼icon.png">
+    <script src="../vue.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .all{
+            background-color: black;
+            color: white;
+        }
+        div.title{
+            text-align: center;
+            font-size: 2em;
+            transition: color 2s;
+        }
+        div.title:hover{
+            color:aqua
+        }
+        div.body{
+            background-color: black;
+            margin: auto;
+            width: 400px;
+            padding-top: 6em;
+            padding-bottom: 3em;
+        }
+        div.body>ul{
+         list-style-type: none;  
+         text-align: center; 
+        }
+        div.body>ul>li.gongde{
+            background-color: black;
+            min-height: 4em;
+            max-height: 7em;
+            font-size: 1em;
+            transition: font-size 1.5s ,color 1s;
+            color: black;
+        }
+        div.body>ul>li.gongde:hover{
+            font-size: 4em;
+            color: white;
+        }
+        div>h4{
+            position: fixed;
+        }
+        div>ul>li>img{
+            width: 15em;
+            height: auto;
+            transition: width 1s;
+        }
+        div>ul>li>img:hover{
+            width: 14em;
+            height: auto;
+        }
+        div>h4{
+            margin-top: 10em;
+        }
+    </style>
+</head>
+<body class="all">
+    <div class="title"><h2>小木鱼</h2></div>
+    <div class="body" id="body">
+        <ul>
+            <li class="gongde" @mouseenter="fun" @mouseleave="change">功德+1</li>
+            <li class="muyu"><img src="../木鱼.png" @click="fun" @mouseleave="change"></li>
+        </ul>
+        <h4>功德:  {{count}} <span v-show="isshow">+1</span></h4>
+    </div>
+    <script>
+        const body = new Vue({
+            el:'#body',
+            data:{
+                count:0,
+                isshow:false
+            },
+            methods:{
+                fun(){
+                    this.count +=1,
+                    this.isshow = !this.isshow
+                },
+                change(){
+                    this.isshow = !this.isshow
+                }
+            }
+        })
+    </script>
+</body>
+</html>

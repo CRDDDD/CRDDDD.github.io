@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../笔记本.png">
+    <title>记事本</title>
+    <script src="../vue.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .all{
+            background-color: rgb(89, 88, 88);
+            color: white;
+        }
+        div.title{
+            text-align: center;
+            font-size: 2em;
+            transition: color 2s;
+        }
+        div.title:hover{
+            color:rgb(34, 255, 185)
+        }
+        div.body{
+            background-color: antiquewhite;
+            margin: auto;
+            width: 600px;
+            min-height: 400px;
+            padding-top: 2.5em;
+            box-shadow: 0 0 4px white;
+            border-radius: 15px;
+            padding-left: 2em;
+        }
+        div>p{
+            text-align: left;
+        }
+        div.body>p>input.input{
+            background-color: white;
+            border-style: solid;
+            border-radius: 100px;
+            width: 20em;
+            height: 2em;
+            font-style: italic;
+            font-weight: bold;
+            box-shadow: 0 0 1px;
+            transition: width 1s,height 1s,font-size 1s,background-color 1s;
+        }
+        div.body>p>input.input:hover{
+            width: 20em;
+            height: 3em;
+            font-size: 20px;
+            background-color: azure;
+        }
+        .addbtn{
+            background-color: white;
+            border-radius: 10px;
+            color: black;
+            text-align: center;
+            width: 4em;
+            height: 2.5em;
+            font-weight: bold;
+            transition: width 1s ,height 1s,background-color 1s,color 1s;
+        }
+        .addbtn:hover{
+            height: 3.5em;
+            width: 5em;
+            background-color:black;
+            color: white;
+        }
+        .list{
+            list-style: none;
+            margin-top: 1em;
+            padding-left: 2.5em;
+            font-size: 1em;
+            color: black;
+            font-weight: bold;
+        }
+        .list>li{
+            background-color: rgba(0, 255, 255, 0);
+        }
+        .del{
+            margin: 0;
+            padding: 0;
+            border-style: none;
+            background-color:rgba(255, 255, 255, 0);
+            float: right;
+            padding-right: 3em;
+        }
+        .delimg{
+            margin-top: 4px;
+            padding: 0;
+            text-align: center;
+            width: 2em;
+            height: 2em;
+            transition: width 1s,height 1s;
+        }
+        .delimg:hover{
+            width: 2.5em;
+            height: 2.5em;
+        }
+        .clear{
+            margin: 0;
+            padding: 0;
+            background-color: rgba(255, 235, 205, 0);
+            border-style: none;
+            float: right;
+        }
+        .clearimg{
+            margin-top: 2px;
+            width: 1.5em;
+            height: 1.5em;
+            padding-right: 35em;
+        }
+    </style>
+</head>
+<body class="all">
+    <div class="title"><h2>记事本</h2></div>
+    <div class="body" id="body">
+        <p><span style="color: black;font-weight: bold;">添加任务： </span> <input v-model="task" type="text" placeholder=" 输入任务吧！" class="input" @keyup.enter="add">&nbsp;&nbsp;
+            <button class="addbtn" @click="add">添加</button>
+        </p>
+        <ul class="list" v-for="(item,index) in tasklist" :key="item.id">
+            <li @mouseenter="change(item)" @mouseleave="change(item)">{{index+1}}. {{item.name}}<button class="del" v-show="item.isshow" @click="delet(item.id)">
+                <img src="../删除.png" class="delimg">
+            </button></li>
+
+        </ul><br><br><br>
+        <p style="color: black;" v-show="tasklist.length!==0">统计：{{tasklist.length}} 件
+            <button class="clear" @click="clear"><img src="../清空.png" class="clearimg"></button>
+        </p>
+    </div>
+    <script>
+        const body = new Vue({
+            el:'#body',
+            data:{
+                tasklist:[
+                    {id:1,name:'快来添加！',isshow:false},
+                ],
+                task:''
+            },
+            methods:{
+                change(a){
+                    a.isshow = !a.isshow
+                },
+                delet(a){
+                    this.tasklist = this.tasklist.filter(item=>item.id!==a)
+                },
+                add(){
+                    if(this.task.trim()===''){
+                        alert("输入任务")
+                        return
+                    }
+                    this.tasklist.unshift({
+                        id:+ new Date(),
+                        name:this.task,
+                        isshow:false
+                    })
+                    this.task=''                    
+                },
+                clear(){
+                    this.tasklist = []
+                }
+            }
+        })
+    </script>
+</body>
+</html>
